@@ -1,4 +1,5 @@
 $ORIG_DIR="$pwd"
+$SCRIPT_NAME=$MyInvocation.MyCommand.Name
 
 $TARGET_DIR="target"
 $WORKING_DIR=$ORIG_DIR
@@ -11,7 +12,7 @@ function _exit {
 
 function usage {
         write-host "================ Help ================" -ForegroundColor White
-        write-host "Usage: $$ <command>" -ForegroundColor Gray
+        write-host "Usage: $SCRIPT_NAME <command>" -ForegroundColor Gray
         write-host "Commands:" -ForegroundColor Gray
 
         write-host "    cmake   " -ForegroundColor White -NoNewLine
@@ -43,6 +44,10 @@ function info {
 function err {
         write-host "ERR : " -ForegroundColor Red -NoNewLine
         echo $args
+}
+
+if ( $args[0] -eq "help" ) {
+        usage
 }
 
 for ($i=0; $i -le $UP_TRAVERSAL; $i++) {
@@ -84,13 +89,11 @@ switch ($COMMAND) {
                 info "Invoking: '$CMD'"
                 Invoke-Expression -Command $CMD
         }
-        help {
+        $null {
+                err "Unknown command: <null>"
                 usage
         }
         default {
-                if ($COMMAND -eq $null) {
-                        $COMMAND="<null>"
-                }
                 if (Get-Item -Path $WORKING_DIR\$TARGET_DIR\$COMMAND -ErrorAction Ignore) {
                         $exe="$WORKING_DIR\$TARGET_DIR\$COMMAND"
                         if ($FAKE_EXEC_HOST -ne $null) {

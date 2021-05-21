@@ -4,8 +4,7 @@ A stupid CMake wrapper.
 
 ## Behaviour
 The script searches for the `CMakeLists.txt` file. If it is not found
-the script goes searches in the `$UP_TRAVERSAL` dir(s) if the file is
-found there.
+the script searches in the `$UP_TRAVERSAL` parent dir(s).
 
 If the file is found, this directory is treated as the projects root
 directory.

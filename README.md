@@ -30,11 +30,11 @@ the same folder where the `CMakeLists.txt` file is located.  If it is found
 it is executed.
 
 This can be used to set some environment variables (or do it manually):
-1. `$FAKE_CMAKE_FLAGS`: flags appended to the `cmake ../.` command
+1. `$FAKE_CMAKE_FLAGS`: flags appended to the `cmake ..\.` command
 2. `$FAKE_EXEC_HOST`: <bin> are copied to the host and executed remotely
 
 Tip: You can also set `$env:CC=...` with the `fake.conf.ps1` file.
 
 ## Bash Version
-Does currently not support the config file and environment variable stuff.
+The bash version supports the same mechanic with `fake.conf.sh`
 

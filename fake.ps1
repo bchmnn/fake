@@ -19,16 +19,17 @@ function usage {
         write-host 'runs cmake in target dir ($FAKE_CMAKE_FLAGS)' -ForegroundColor Gray
 
         write-host "    build   " -ForegroundColor White -NoNewLine
-        write-host "runs cmake --build $TARGET_DIR" -ForegroundColor Gray
+        write-host "runs cmake --build .\$TARGET_DIR" -ForegroundColor Gray
 
         write-host "    status  " -ForegroundColor White -NoNewLine
         write-host "prints some status information" -ForegroundColor Gray
 
         write-host "    clean   " -ForegroundColor White -NoNewLine
-        write-host "del $TARGET_DIR" -ForegroundColor Gray
+        write-host "del .\$TARGET_DIR" -ForegroundColor Gray
 
         write-host "    <bin>   " -ForegroundColor White -NoNewLine
-        write-host "executes <bin> in dir $TARGET_DIR" -ForegroundColor Gray
+        write-host "executes <bin> in dir '$TARGET_DIR' " -ForegroundColor Gray -NoNewLine
+        write-host '($FAKE_EXEC_HOST)' -ForegroundColor Gray
 
         write-host "    help    " -ForegroundColor White -NoNewLine
         write-host "show this screen" -ForegroundColor Gray
@@ -56,7 +57,7 @@ for ($i=0; $i -le $UP_TRAVERSAL; $i++) {
         }
         if ( $i -eq $UP_TRAVERSAL ) {
                 err "CMakeLists.txt does not exist in the upper $UP_TRAVERSAL dir(s)"
-                _exit
+                usage
         }
         $WORKING_DIR=$(Resolve-Path -Path "$WORKING_DIR\..").path
 }
@@ -89,7 +90,7 @@ switch ($COMMAND) {
                 info "Invoking: '$CMD'"
                 Invoke-Expression -Command $CMD
         }
-        $null {
+        {($_ -eq $null) -or ($_ -eq '') -or ($_ -eq "")} {
                 err "Unknown command: <null>"
                 usage
         }

@@ -14,13 +14,13 @@ With this behaviour the script can be called from projects child dir(s).
 ## Usage
 ```
 ================ Help ================
-Usage: clear <command>
+Usage: fake.ps1 <command>
 Commands:
     cmake   runs cmake in target dir ($FAKE_CMAKE_FLAGS)
-    build   runs cmake --build target
+    build   runs cmake --build .\target
     status  prints some status information
-    clean   del target
-    <bin>   executes <bin> in dir target ($FAKE_EXEC_HOST)
+    clean   del .\target
+    <bin>   executes <bin> in dir 'target' ($FAKE_EXEC_HOST)
     help    show this screen
 ```
 
@@ -36,5 +36,5 @@ This can be used to set some environment variables (or do it manually):
 Tip: You can also set `$env:CC=...` with the `fake.conf.ps1` file.
 
 ## Bash Version
-The bash version supports the same mechanic with `fake.conf.sh`
+Analogous to `Powershell Version` with `fake.conf.sh` instead
 

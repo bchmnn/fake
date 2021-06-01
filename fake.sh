@@ -81,7 +81,7 @@ help)
                 if [[ $exec == "$exe" ]]; then
                         if [[ ! -z "$FAKE_EXEC_HOST" ]]; then
                                 scp $exe $FAKE_EXEC_HOST:.
-                                ssh $FAKE_EXEC_HOST -t "chmod +x $1; ./$1 ${@:2}; rm $1"
+                                ssh $FAKE_EXEC_HOST -tt "chmod +x $1; ./$1 ${@:2}; rm $1"
                         else
                                 info "Executing: $exec"
                                 $exec ${@:2}

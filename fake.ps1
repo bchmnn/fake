@@ -97,11 +97,17 @@ switch ($COMMAND) {
         default {
                 if (Get-Item -Path $WORKING_DIR\$TARGET_DIR\$COMMAND -ErrorAction Ignore) {
                         $exe="$WORKING_DIR\$TARGET_DIR\$COMMAND"
+                        $exe_args=$args[1..$args.count]
                         if ($FAKE_EXEC_HOST -ne $null) {
+                                info "Copying $exe to $FAKE_EXEC_HOST"
                                 scp $exe $FAKE_EXEC_HOST`:.
-                                ssh $FAKE_EXEC_HOST -t "chmod +x $COMMAND; ./$COMMAND; rm $COMMAND"
+                                $CMD="chmod +x $COMMAND; ./$COMMAND $exe_args; rm $COMMAND"
+                                info "Remote-invoking: '$CMD'"
+                                ssh $FAKE_EXEC_HOST -t "$CMD"
                         } else {
-                                .\$exe
+                                $CMD=".\$exe $exe_args"
+                                info "Invoking: '$CMD'"
+                                Invoke-Expression -Command $CMD
                         }
                         _exit
                 }

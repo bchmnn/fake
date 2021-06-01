@@ -27,11 +27,11 @@ Commands:
 ## Powershell Version
 The powershell version searches for a script called `fake.conf.ps1` in
 the same folder where the `CMakeLists.txt` file is located.  If it is found
-it is executed.
+it is executed/sourced.
 
-This can be used to set some environment variables (or do it manually):
+This can be used to set some environment variables:
 1. `$FAKE_CMAKE_FLAGS`: flags appended to the `cmake ..\.` command
-2. `$FAKE_EXEC_HOST`: <bin> are copied to the host and executed remotely
+2. `$FAKE_EXEC_HOST`: \<bin\> is copied to the host and executed remotely
 
 Tip: You can also set `$env:CC=...` with the `fake.conf.ps1` file.
 
